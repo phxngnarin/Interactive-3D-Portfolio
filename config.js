@@ -24,9 +24,9 @@ export const config = {
   },
 
   loading: {
-    greeting: "~ สวัสดี ~", // ข้อความบนหน้าจอโหลดหลังกดเข้า
-    enter: "Enter!",
-    enterWithoutSound: "Enter without Sound :(",
+    greeting: "ยินดีต้อนรับ", // ข้อความบนหน้าจอโหลดหลังกดเข้า
+    enter: "กดเลย!",
+    enterWithoutSound: "กดปิดเสียงได้ :(",
   },
 
   // ชื่อบนป้ายไม้ข้างหน้าต่าง (ตัวอักษรจะถูกสร้างเป็น 3D ให้อัตโนมัติ – เปลี่ยนชื่อได้เลย)
