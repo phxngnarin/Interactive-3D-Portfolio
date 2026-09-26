@@ -1,0 +1,346 @@
+@font-face {
+  font-family: "Shifty Notes";
+  src: url("../assets/fonts/ShiftyNotes-Regular.woff2") format("woff2"),
+    url("../assets/fonts/ShiftyNotes-Regular.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Motley Forces";
+  src: url("../assets/fonts/MotleyForces-Regular.woff2") format("woff2"),
+    url("../assets/fonts/MotleyForces-Regular.woff") format("woff");
+  font-display: swap;
+}
+
+.light-theme {
+  --c-dark: #245f8f;
+  --c-main: #4a8fc4;
+  --c-soft: #b3d7f0;
+  --c-bg: #e2f1fb;
+  --c-text: #0c2a40;
+}
+.dark-theme {
+  --c-dark: #d3e9f8;
+  --c-main: #7fbbe6;
+  --c-soft: #1f4d73;
+  --c-bg: #0f2f4a;
+  --c-text: #e2f1fb;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2 {
+  font-family: "Motley Forces", "Sarabun", "Noto Sans Thai", sans-serif;
+}
+p,
+ul,
+li {
+  font-family: "Shifty Notes", "Sarabun", "Noto Sans Thai", sans-serif;
+}
+
+#experience {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+#experience-canvas {
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  display: block;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 36px;
+  z-index: 2;
+  padding: 10px;
+  border: 8px solid var(--c-main);
+  border-radius: 1.2rem;
+  background-color: var(--c-bg);
+  color: var(--c-main);
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.mute-toggle-button {
+  right: 148px;
+}
+.theme-toggle-button {
+  right: 48px;
+}
+.mute-toggle-button:hover {
+  transform: rotate(-5deg) scale(1.3);
+}
+.theme-toggle-button:hover {
+  transform: rotate(5deg) scale(1.3);
+}
+
+.sound-svg,
+.sun-svg,
+.moon-svg {
+  width: 40px;
+  height: 40px;
+  stroke: var(--c-main);
+}
+.sound-off-svg {
+  display: none;
+}
+.moon-svg {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .toggle-buttons {
+    top: 30px;
+  }
+  .mute-toggle-button {
+    right: 96px;
+  }
+  .theme-toggle-button {
+    right: 18px;
+  }
+  .sound-svg,
+  .sun-svg,
+  .moon-svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 108vw;
+  height: 108vh;
+  margin-left: -54vw;
+  margin-top: -54vh;
+  overflow: hidden;
+  z-index: 999999;
+  border: 8px solid var(--c-main);
+  background-color: var(--c-dark);
+  transform: perspective(1000px);
+  border-radius: 48px;
+}
+.loading-screen-button {
+  font-family: "Motley Forces", "Sarabun", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  padding: 10px 40px;
+  outline: none;
+  color: #eef7fd;
+  border-radius: 1.2rem;
+  border: none;
+  font-size: 42px;
+}
+.no-sound-button {
+  font-family: "Motley Forces", "Sarabun", sans-serif;
+  background-color: transparent;
+  border: none;
+  color: #c3dcee;
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  font-size: 16px;
+  transform: translate(-50%, -50%);
+}
+.no-sound-button:hover {
+  color: #fff;
+  cursor: pointer;
+}
+.instructions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  max-width: 1200px;
+  width: 90%;
+  font-size: 28px;
+  transform: translate(-50%, -50%);
+  color: #eef7fd;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .loading-screen-button {
+    font-size: 32px;
+  }
+  .desktop-instructions {
+    display: none;
+  }
+}
+@media (min-width: 768px) {
+  .mobile-instructions {
+    display: none;
+  }
+}
+
+.hud {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  pointer-events: none;
+}
+.hud[hidden] {
+  display: none;
+}
+.hud-card {
+  pointer-events: auto;
+  width: min(680px, 100%);
+  padding: 18px 24px 16px;
+  border: 6px solid var(--c-main);
+  border-radius: 1.6rem;
+  background: var(--c-bg);
+  color: var(--c-text);
+  box-shadow: rgba(0, 0, 0, 0.24) 0 3px 12px;
+  text-align: center;
+}
+.hud-kicker {
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-main);
+  margin-bottom: 2px;
+}
+.hud-title {
+  font-size: 1.7rem;
+  color: var(--c-dark);
+  line-height: 1.2;
+}
+.hud-text {
+  margin-top: 8px;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  max-height: 28vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.hud-text:empty {
+  display: none;
+}
+.hud-text.compact-only {
+  display: none;
+}
+.hud-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+.hud-links:empty {
+  display: none;
+}
+.hud-link {
+  font-family: "Motley Forces", "Sarabun", sans-serif;
+  padding: 6px 18px;
+  border-radius: 999px;
+  border: 3px solid var(--c-main);
+  color: var(--c-dark);
+  background: var(--c-soft);
+  text-decoration: none;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hud-link:hover {
+  transform: scale(1.1) rotate(-2deg);
+}
+.hud-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 14px;
+}
+.hud-counter {
+  min-width: 3.2em;
+  font-family: "Motley Forces", "Sarabun", sans-serif;
+  color: var(--c-dark);
+}
+.hud-btn {
+  font-family: "Motley Forces", "Sarabun", sans-serif;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 16px;
+  border: 4px solid var(--c-main);
+  border-radius: 0.9rem;
+  background: var(--c-soft);
+  color: var(--c-dark);
+  font-size: 1.15rem;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.hud-btn:hover {
+  transform: scale(1.12);
+}
+.hud-btn[hidden],
+.hud-counter[hidden] {
+  display: none;
+}
+.hud-back {
+  background: var(--c-main);
+  color: var(--c-bg);
+}
+
+@media (max-width: 768px) {
+  .hud {
+    bottom: 12px;
+  }
+  .hud-card {
+    padding: 12px 14px;
+    border-width: 5px;
+  }
+  .hud-title {
+    font-size: 1.3rem;
+  }
+  .hud-text {
+    font-size: 1.05rem;
+  }
+  .hud-text.compact-only {
+    display: block;
+  }
+}
+@media (max-aspect-ratio: 1/1) {
+  .hud-text.compact-only {
+    display: block;
+  }
+}
